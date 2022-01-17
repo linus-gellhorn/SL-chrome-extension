@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Learn Sign Language as you browse",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": ["content.css"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "hand-logo.png",
+    "default_popup": "index.html",
+    "default_title": "Look up a sign!"
+  }
+}
