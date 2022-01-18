@@ -1,7 +1,5 @@
 console.log("Chrome extension running!");
 
-window.addEventListener("mouseup", wordSelected);
-
 const wordList = ["colour", "print", "writing"];
 
 let myDataList;
@@ -13,46 +11,34 @@ async function getMp4LinkFromWord(word) {
   const jsonBody = await response.json();
   const mp4Source = "https://bslsignbank.ucl.ac.uk" + jsonBody.data;
 
-  const videoHTML = `<video autoplay muted loop width='400px' src=${mp4Source}></video>`;
+  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video>`;
   return videoHTML;
 }
 
 async function replacer() {
-  const textElements = document.querySelectorAll("h1, h2, h3, p, span, a, li");
+  const textElements = document.querySelectorAll("p, span, a, li");
   for (let element of textElements) {
     for (const word of wordList) {
       if (element.innerHTML.includes(word)) {
+        // get that word's sign
         const vidHTML = await getMp4LinkFromWord(word);
-        console.log(vidHTML);
-        element.innerHTML = element.innerHTML.replace(
-          word,
-          `<mark class='tooltip'>${word}<span class='tooltiptext'>${vidHTML}</span></mark>`
-        );
+
+        // find position in order to display tooltip above/below correctly
+        let position = element.getBoundingClientRect();
+
+        if (position.y < 200) {
+          element.innerHTML = element.innerHTML.replace(
+            word,
+            `<mark class='tooltip-b'>${word}<span class='tooltiptext-b'>${vidHTML}</span></mark>`
+          );
+        } else {
+          element.innerHTML = element.innerHTML.replace(
+            word,
+            `<mark class='tooltip-a'>${word}<span class='tooltiptext-a'>${vidHTML}</span></mark>`
+          );
+        }
       }
     }
   }
 }
 replacer();
-
-function wordSelected() {
-  let selectedText = window.getSelection().toString().trim();
-  console.log(selectedText);
-  if (selectedText.length > 0) {
-    let message = {
-      text: selectedText,
-    };
-    chrome.runtime.sendMessage(message);
-  }
-}
-
-// const tooltipDiv = document.createElement("div");
-// tooltipDiv.className = "tooltip";
-// tooltipDiv.id = "123";
-// tooltipDiv.innerHTML = "Hover over me";
-// document.body.appendChild(tooltipDiv);
-
-// const tooltipText = document.createElement("span");
-// tooltipText.className = "tooltiptext";
-// tooltipText.innerHTML =
-//   "<video autoplay muted loop width='400px' src='https://bslsignbank.ucl.ac.uk/media/bsl-video/CO/COLD.mp4'></video>";
-// document.getElementById("123").appendChild(tooltipText);
