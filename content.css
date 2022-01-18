@@ -1,32 +1,43 @@
-.test {
-  color: red !important;
-}
-
 /* Tooltip container */
-.tooltip {
+.tooltip-a,
+.tooltip-b {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext {
+.tooltip-a .tooltiptext-a,
+.tooltip-b .tooltiptext-b {
   visibility: hidden;
   width: 120px;
   color: #fff;
   text-align: center;
   padding: 5px 0;
 
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
+}
 
+/* Above (if element is at middle or bottom of page) */
+.tooltip-a .tooltiptext-a {
+  width: 320px;
   bottom: 100%;
   left: 50%;
-  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -160px; /* Need to use half of the width to center the tooltip */
+}
+
+/* Below (if element is at top of page) */
+.tooltip-b .tooltiptext-b {
+  width: 320px;
+  top: 100%;
+  left: 50%;
+  margin-left: -160px;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+.tooltip-a:hover .tooltiptext-a,
+.tooltip-b:hover .tooltiptext-b {
   visibility: visible;
 }
