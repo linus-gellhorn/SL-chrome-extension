@@ -1,8 +1,17 @@
 console.log("Chrome extension running!");
 
-const wordList = ["colour", "print", "writing"];
+const wordList = ["yes", "no", "maybe", "you", "me", "in", "for", "the"];
 
-let myDataList;
+function randomiser(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array.slice(0, 3);
+}
+
+const randomWords = randomiser(wordList);
+console.log(randomWords);
 
 async function getMp4LinkFromWord(word) {
   const response = await fetch(
@@ -18,7 +27,7 @@ async function getMp4LinkFromWord(word) {
 async function replacer() {
   const textElements = document.querySelectorAll("p, span, a, li");
   for (let element of textElements) {
-    for (const word of wordList) {
+    for (const word of randomWords) {
       if (element.innerHTML.includes(word)) {
         // get that word's sign
         const vidHTML = await getMp4LinkFromWord(word);
