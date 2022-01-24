@@ -1,6 +1,6 @@
 console.log("Chrome extension running!");
 
-const wordList = ["yes", "no", "maybe", "you", "me", "in", "for", "the"];
+const wordList = ["you", "me", "in", "the"];
 
 function randomiser(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -37,13 +37,13 @@ async function replacer() {
 
         if (position.y < 200) {
           element.innerHTML = element.innerHTML.replace(
-            word,
-            `<mark class='tooltip-b'>${word}<span class='tooltiptext-b'>${vidHTML}</span></mark>`
+            ` ${word} `,
+            `<mark class='tooltip-b'>&nbsp;${word}&nbsp;<span class='tooltiptext-b'>${vidHTML}</span></mark>`
           );
         } else {
           element.innerHTML = element.innerHTML.replace(
-            word,
-            `<mark class='tooltip-a'>${word}<span class='tooltiptext-a'>${vidHTML}</span></mark>`
+            ` ${word} `,
+            `<mark class='tooltip-a'>&nbsp;${word}&nbsp;<span class='tooltiptext-a'>${vidHTML}</span></mark>`
           );
         }
       }
