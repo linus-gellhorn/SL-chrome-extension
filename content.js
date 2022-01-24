@@ -38,12 +38,12 @@ async function replacer() {
         if (position.y < 200) {
           element.innerHTML = element.innerHTML.replace(
             ` ${word} `,
-            `<mark class='tooltip-b'>&nbsp;${word}&nbsp;<span class='tooltiptext-b'>${vidHTML}</span></mark>`
+            `&nbsp;<mark class='tooltip-b'>${word}<span class='tooltiptext-b'>${vidHTML}</span></mark>&nbsp;`
           );
         } else {
           element.innerHTML = element.innerHTML.replace(
             ` ${word} `,
-            `<mark class='tooltip-a'>&nbsp;${word}&nbsp;<span class='tooltiptext-a'>${vidHTML}</span></mark>`
+            `&nbsp;<mark class='tooltip-a'>${word}<span class='tooltiptext-a'>${vidHTML}</span></mark>&nbsp;`
           );
         }
       }
