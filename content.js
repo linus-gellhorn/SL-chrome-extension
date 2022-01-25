@@ -327,17 +327,14 @@ async function replacer() {
         // find position in order to display tooltip above/below correctly
         let position = element.getBoundingClientRect();
 
-        if (position.y < 200) {
-          element.innerHTML = element.innerHTML.replace(
-            ` ${word} `,
-            `&nbsp;<mark class='tooltip-b'>${word}<span class='tooltiptext-b'>${vidHTML}</span></mark>&nbsp;`
-          );
-        } else {
-          element.innerHTML = element.innerHTML.replace(
-            ` ${word} `,
-            `&nbsp;<mark class='tooltip-a'>${word}<span class='tooltiptext-a'>${vidHTML}</span></mark>&nbsp;`
-          );
-        }
+        element.innerHTML = element.innerHTML.replace(
+          ` ${word} `,
+          ` <mark class='tooltip-${
+            position.y < 200 ? "b" : "a"
+          }'>${word}<span class='tooltiptext-${
+            position.y < 200 ? "b" : "a"
+          }'>${vidHTML}</span></mark> `
+        );
       }
     }
   }
