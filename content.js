@@ -292,8 +292,9 @@ async function getMp4LinkFromWord(word) {
   );
   const jsonBody = await response.json();
   const mp4Source = "https://bslsignbank.ucl.ac.uk" + jsonBody.data.link;
+  const relatedWords = jsonBody.data.words;
 
-  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video>`;
+  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'>${relatedWords}</p>`;
   return videoHTML;
 }
 
