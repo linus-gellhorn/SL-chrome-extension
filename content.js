@@ -1,17 +1,103 @@
-console.log("Chrome extension running!");
-
-const wordList = ["you", "me", "in", "the"];
-
 function randomiser(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array.slice(0, 3);
+  return array;
 }
 
-const randomWords = randomiser(wordList);
-console.log(randomWords);
+const top100words = [
+  "can",
+  "can't",
+  "allow",
+  "always",
+  "never",
+  "every",
+  "only",
+  "other",
+  "many",
+  "few",
+  "will",
+  "should",
+  "some",
+  "more",
+  "another",
+  "must",
+  "show",
+  "happen",
+  "true",
+  "false",
+  "correct",
+  "incorrect",
+  "sure",
+  "unsure",
+  "know",
+  "say",
+  "think",
+  "choose",
+  "decide",
+  "agree",
+  "disagree",
+  "need",
+  "want",
+  "like",
+  "dislike",
+  "useful",
+  "yes",
+  "no",
+  "maybe",
+  "each",
+  "okay",
+  "same",
+  "different",
+  "change",
+  "sometimes",
+  "anyway",
+  "again",
+  "thing",
+  "anything",
+  "everything",
+  "something",
+  "with",
+  "without",
+  "explain",
+  "continue",
+  "about",
+  "for",
+  "against",
+  "have",
+  "do",
+  "but",
+  "if",
+  "tell",
+  "believe",
+  "really",
+  "reason",
+  "because",
+  "remember",
+  "forgot",
+  "enough",
+  "include",
+  "recognise",
+  "follow",
+  "question",
+  "answer",
+  "ask",
+  "what",
+  "why",
+  "when",
+  "how",
+  "who",
+  "where",
+  "which",
+  "discuss",
+  "sorry",
+  "please",
+  "thanks",
+  "bye",
+];
+
+const randomWords = randomiser(top100words);
 
 async function getMp4LinkFromWord(word) {
   const response = await fetch(
@@ -26,9 +112,28 @@ async function getMp4LinkFromWord(word) {
 
 async function replacer() {
   const textElements = document.querySelectorAll("p, span, a, li");
-  for (let element of textElements) {
-    for (const word of randomWords) {
-      if (element.innerHTML.includes(word)) {
+  let wordsLearningCount = 0;
+  const wordsOnCurrentPage = [];
+
+  for (const word of randomWords) {
+    let wordAppearances = 0;
+    // ensures only 3 unique random words are given signs on each page
+    if (wordsLearningCount === 3) {
+      break;
+    }
+
+    for (let element of textElements) {
+      if (element.innerHTML.includes(` ${word} `)) {
+        wordAppearances++;
+        // ensures for a given word, user is only shown its sign max 3 times
+        if (wordAppearances > 3) {
+          break;
+        }
+        if (!wordsOnCurrentPage.includes(word)) {
+          wordsOnCurrentPage.push(word);
+          wordsLearningCount++;
+        }
+
         // get that word's sign
         const vidHTML = await getMp4LinkFromWord(word);
 
