@@ -41,3 +41,10 @@
 .tooltip-b:hover .tooltiptext-b {
   visibility: visible;
 }
+
+/* In dire need of making prettier */
+.words {
+  background-color: white;
+  color: red;
+  border: solid black 3px;
+}
