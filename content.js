@@ -6,97 +6,6 @@ function randomiser(array) {
   return array;
 }
 
-// const top100words = [
-//   "can",
-//   "can't",
-//   "allow",
-//   "always",
-//   "never",
-//   "every",
-//   "only",
-//   "other",
-//   "many",
-//   "few",
-//   "will",
-//   "should",
-//   "some",
-//   "more",
-//   "another",
-//   "must",
-//   "show",
-//   "happen",
-//   "true",
-//   "false",
-//   "correct",
-//   "incorrect",
-//   "sure",
-//   "unsure",
-//   "know",
-//   "say",
-//   "think",
-//   "choose",
-//   "decide",
-//   "agree",
-//   "disagree",
-//   "need",
-//   "want",
-//   "like",
-//   "dislike",
-//   "useful",
-//   "yes",
-//   "no",
-//   "maybe",
-//   "each",
-//   "okay",
-//   "same",
-//   "different",
-//   "change",
-//   "sometimes",
-//   "anyway",
-//   "again",
-//   "thing",
-//   "anything",
-//   "everything",
-//   "something",
-//   "with",
-//   "without",
-//   "explain",
-//   "continue",
-//   "about",
-//   "for",
-//   "against",
-//   "have",
-//   "do",
-//   "but",
-//   "if",
-//   "tell",
-//   "believe",
-//   "really",
-//   "reason",
-//   "because",
-//   "remember",
-//   "forgot",
-//   "enough",
-//   "include",
-//   "recognise",
-//   "follow",
-//   "question",
-//   "answer",
-//   "ask",
-//   "what",
-//   "why",
-//   "when",
-//   "how",
-//   "who",
-//   "where",
-//   "which",
-//   "discuss",
-//   "sorry",
-//   "please",
-//   "thanks",
-//   "bye",
-// ];
-
 const wordList184words = [
   "can",
   "can't",
@@ -292,9 +201,12 @@ async function getMp4LinkFromWord(word) {
   );
   const jsonBody = await response.json();
   const mp4Source = "https://bslsignbank.ucl.ac.uk" + jsonBody.data.link;
-  const relatedWords = jsonBody.data.words;
+  const keyWord = jsonBody.data.word;
+  const relatedWords = jsonBody.data.related;
 
-  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'>${relatedWords}</p>`;
+  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'><b>${keyWord}${
+    relatedWords && ", "
+  }</b>${relatedWords}</p>`;
   return videoHTML;
 }
 
@@ -323,7 +235,7 @@ async function replacer() {
         }
 
         // get that word's sign
-        const vidHTML = await getMp4LinkFromWord(word);
+        const tooltipHTML = await getMp4LinkFromWord(word);
 
         // find position in order to display tooltip above/below correctly
         let position = element.getBoundingClientRect();
@@ -334,7 +246,7 @@ async function replacer() {
             position.y < 200 ? "b" : "a"
           }'>${word}<span class='tooltiptext-${
             position.y < 200 ? "b" : "a"
-          }'>${vidHTML}</span></mark> `
+          }'>${tooltipHTML}</span></mark> `
         );
       }
     }
