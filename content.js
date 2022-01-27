@@ -204,9 +204,9 @@ async function getMp4LinkFromWord(word) {
   const keyWord = jsonBody.data.word;
   const relatedWords = jsonBody.data.related;
 
-  const videoHTML = `<video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'><b>${keyWord}${
+  const videoHTML = `<div class='video-mask'><video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'><b>${keyWord}${
     relatedWords && ", "
-  }</b>${relatedWords}</p>`;
+  }</b>${relatedWords}</p></div>`;
   return videoHTML;
 }
 
@@ -243,9 +243,9 @@ async function replacer() {
         element.innerHTML = element.innerHTML.replace(
           ` ${word} `,
           ` <mark class='tooltip-${
-            position.y < 200 ? "b" : "a"
+            position.y < 240 ? "b" : "a"
           }'>${word}<span class='tooltiptext-${
-            position.y < 200 ? "b" : "a"
+            position.y < 240 ? "b" : "a"
           }'>${tooltipHTML}</span></mark> `
         );
       }

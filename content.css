@@ -3,7 +3,7 @@
 .tooltip-b {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  border-bottom: 1px dotted black; /* Dots under the hoverable text */
 }
 
 /* Tooltip text */
@@ -13,11 +13,10 @@
   width: 120px;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
 
   /* Position the tooltip text */
   position: absolute;
-  z-index: 1;
+  z-index: 999;
 }
 
 /* Above (if element is at middle or bottom of page) */
@@ -26,6 +25,7 @@
   bottom: 100%;
   left: 50%;
   margin-left: -160px; /* Need to use half of the width to center the tooltip */
+  margin-bottom: 5px;
 }
 
 /* Below (if element is at top of page) */
@@ -34,6 +34,7 @@
   top: 100%;
   left: 50%;
   margin-left: -160px;
+  margin-top: 5px;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
@@ -42,9 +43,23 @@
   visibility: visible;
 }
 
+.video-mask {
+  border: solid black 3px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+  font-size: 0; /* To remove weird default margin on video elements */
+}
+
 /* In dire need of making prettier */
 .words {
   background-color: white;
-  color: red;
-  border: solid black 3px;
+  color: black;
+  border-top: solid black 3px;
+  margin: 0 !important;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: medium;
+  padding: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
