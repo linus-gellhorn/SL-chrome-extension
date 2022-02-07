@@ -5793,10 +5793,11 @@ async function getMp4LinkFromWord(word) {
   const keyWord = jsonBody.data.word;
   const relatedWords = jsonBody.data.related;
 
-  const videoHTML = `<div class='video-mask'><video autoplay muted loop width='320px' src=${mp4Source}></video><p class='words'><b>${keyWord}${
-    relatedWords && ", "
-  }</b>${relatedWords}</p></div>`;
-  return videoHTML;
+  const data = {};
+  data.src = mp4Source;
+  data.word = keyWord;
+  data.words = relatedWords;
+  return data;
 }
 
 async function replacer() {
@@ -5824,18 +5825,22 @@ async function replacer() {
         }
 
         // get that word's sign
-        const tooltipHTML = await getMp4LinkFromWord(word);
+        const signData = await getMp4LinkFromWord(word);
 
         // find position in order to display tooltip above/below correctly
         let position = element.getBoundingClientRect();
 
         element.innerHTML = element.innerHTML.replace(
           ` ${word} `,
-          ` <mark class='tooltip-${
-            position.y < 240 ? "b" : "a"
-          }'>${word}<span class='tooltiptext-${
-            position.y < 240 ? "b" : "a"
-          }'>${tooltipHTML}</span></mark> `
+          `<tool-tip
+            src=${signData.src}
+            word=${signData.word}
+            words="<b>${signData.word}</b>${signData.words && ", "}${
+            signData.words
+          }"
+            mark-class='tooltip-${position.y < 240 ? "b" : "a"}'
+            span-class='tooltiptext-${position.y < 240 ? "b" : "a"}'
+          ></tool-tip>`
         );
       }
     }
